@@ -40,7 +40,7 @@ const postOrder = async (req: Request, res: Response, next: NextFunction) => {
     return next(new BadRequestError(`Сумма указанная в запросе ${totalPrice} не совпадает с ${total}`));
   }
 
-  return res.send({
+  return res.status(201).send({
     id: faker.string.uuid(),
     total,
   });

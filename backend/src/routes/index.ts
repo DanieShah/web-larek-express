@@ -10,8 +10,8 @@ import NotFoundError from '../errors/not-found-error';
 
 const router = Router();
 
-router.use('/product', productRouters);
-router.use('/order', orderRouter);
+router.use(productRouters);
+router.use(orderRouter);
 
 router.use((_req: Request, _res: Response, next: NextFunction) => {
   next(new NotFoundError('Запрос не сущетсвует'));
