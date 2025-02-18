@@ -31,7 +31,16 @@ export const postProduct = async (req: Request, res: Response, next: NextFunctio
       category,
     });
 
-    return res.status(201).send(product);
+    const _id = product._id;
+
+    return res.status(201).send({
+      title,
+      image,
+      description,
+      price,
+      category,
+      _id,
+    });
   } catch (error) {
     if (error instanceof MongooseError.ValidationError) {
       return next(new BadRequestError(error.message));
