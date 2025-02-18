@@ -15,6 +15,17 @@ export const getProducts = async (_req: Request, res: Response, next: NextFuncti
 
 export const postProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    req.body = {
+      description: 'Будет стоять над душой и не давать прокрастинировать.',
+      image: {
+        fileName: '/images/Asterisk_2.png',
+        originalName: 'Asterisk_2.png',
+      },
+      title: 'Мамка-таймер',
+      category: 'софт-скил',
+      price: null,
+    };
+
     const {
       title,
       image,
@@ -31,7 +42,7 @@ export const postProduct = async (req: Request, res: Response, next: NextFunctio
       category,
     });
 
-    const _id = product._id;
+    const { _id } = product;
 
     return res.status(201).send({
       title,
