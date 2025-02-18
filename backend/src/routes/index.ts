@@ -1,6 +1,6 @@
-import productRouters from "./products";
-import orderRouter from "./order";
-import { Router } from "express";
+import { Router } from 'express';
+import productRouters from './products';
+import orderRouter from './order';
 
 const router = Router();
 

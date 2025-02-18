@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { faker } from '@faker-js/faker';
-import Product from '../models/products'
-import { BadRequestError } from "../errors/bad-request-error";
+import Product from '../models/products';
+import BadRequestError from '../errors/bad-request-error';
 
 enum Payment {
     card = 'card',
@@ -17,30 +17,33 @@ interface IOrder {
     'items': string[]
 }
 
-export const postOrder = async (req: Request, res: Response, next: NextFunction) => {
-    const order: IOrder = req.body;
+const postOrder = async (req: Request, res: Response, next: NextFunction) => {
+  const order: IOrder = req.body;
 
-    const { total, items } = order;
+  const { total, items } = order;
 
-    const productBase = await Product.find({});
-    let totalPrice: number = 0;
+  const productBase = await Product.find({});
+  let totalPrice: number = 0;
 
-    items.forEach((id: string) => {
-        const productForOrder = productBase.find((prod) => String(prod._id) === id);
-        
-        if (!productForOrder) {
-            return next(new BadRequestError('Товара с данным id не существует'));
-        } else {
-            totalPrice = totalPrice + productForOrder.price;
-        }
-    });
-
-    if ( totalPrice !== total ) {
-        return next(new BadRequestError(`Сумма указанная в запросе ${totalPrice} не совпадает с ${total}`));
-    } else {
-        return res.send({
-            'id': faker.string.uuid(),
-            'total': total,
-        });
+  items.forEach((id: string) => {
+    const productForOrder = productBase.find((prod) => String(prod._id) === id);
+    if (!productForOrder) {
+      return next(new BadRequestError('Товара с данным id не существует'));
     }
-}
+
+    totalPrice += productForOrder.price;
+
+    return totalPrice;
+  });
+
+  if (totalPrice !== total) {
+    return next(new BadRequestError(`Сумма указанная в запросе ${totalPrice} не совпадает с ${total}`));
+  }
+
+  return res.send({
+    id: faker.string.uuid(),
+    total,
+  });
+};
+
+export default postOrder;
