@@ -4,7 +4,7 @@ import orderRouter from './order';
 
 const router = Router();
 
-router.use(productRouters);
-router.use(orderRouter);
+router.use('/product', productRouters);
+router.use('/order', orderRouter);
 
 export default router;
