@@ -6,8 +6,7 @@ import { errors } from 'celebrate';
 import errorHanler from './middlewares/error-habdler';
 import router from './routes/index';
 import { requestLogger, errorLogger } from './middlewares/logger';
-
-const { PORT = 3000 } = process.env;
+import { PORT, DB_ADDRESS } from './config';
 
 const app = express();
 app.use(cors());
