@@ -1,6 +1,2 @@
-import { config } from "dotenv";
-
-config();
-
-export const PORT = process.env.PORT;
-export const DB_ADDRESS = process.env.DB_ADDRESS as string;
+export const { PORT = 3000 } = process.env;
+export const { DB_ADDRESS = "mongodb://127.0.0.1:27017/weblarek"} = process.env;
