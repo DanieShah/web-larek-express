@@ -18,7 +18,7 @@ export const postProduct = async (req: Request, res: Response, next: NextFunctio
     try {
       const { title, image, description, price, category  } = req.body;
       const product = await Product.create({ title, image, description, price, category });
-      return res.status(200).send(product);
+      return res.status(201).send(product);
     } catch (error) {
 
         if (error instanceof MongooseError.ValidationError) {

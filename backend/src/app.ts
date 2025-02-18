@@ -4,7 +4,7 @@ import path from 'path';
 import mongoose from 'mongoose';
 import { errors } from 'celebrate';
 import errorHanler from './middlewares/error-habdler';
-import router from './routers/index';
+import router from './routes/index';
 import { requestLogger, errorLogger } from './middlewares/logger';
 
 const { PORT = 3000 } = process.env;
