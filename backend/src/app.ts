@@ -18,5 +18,5 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHanler);
 
-mongoose.connect('mongodb://127.0.0.1:27017/weblarek');
+mongoose.connect(DB_ADDRESS);
 app.listen(PORT, () => { console.log(`listening on port ${PORT}`) });
