@@ -18,5 +18,14 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHanler);
 
-mongoose.connect(DB_ADDRESS);
-app.listen(PORT, () => { console.log(`listening on port ${PORT}`) });
+
+const bootstrap = async () => {
+  try {
+    await mongoose.connect(DB_ADDRESS);
+    await app.listen(PORT, () => { console.log(`listening on port ${PORT}`) });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+bootstrap();
