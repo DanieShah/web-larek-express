@@ -12,9 +12,6 @@ const app = express();
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
-app.use(requestLogger);
-app.use(router);
-app.use(errorLogger);
 app.use(errors());
 app.use(errorHanler);
 
@@ -23,6 +20,9 @@ const bootstrap = async () => {
   try {
     await mongoose.connect(DB_ADDRESS);
     await app.listen(PORT, () => { console.log(`listening on port ${PORT}`) });
+    app.use(requestLogger);
+    app.use(router);
+    app.use(errorLogger);
   } catch (err) {
     console.log(err);
   }
