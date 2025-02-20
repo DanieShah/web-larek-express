@@ -22,8 +22,10 @@ const postOrder = async (req: Request, res: Response, next: NextFunction) => {
     return totalPrice;
   });
 
-  if (payment !== 'card' || payment !== 'online') {
-    return next(new BadRequestError('Неправильно выбран тип оплаты'));
+  if (payment !== 'online') {
+    if (payment !== 'card') {
+      return next(new BadRequestError('Неправильно выбран тип оплаты'));
+    }
   }
 
   if (totalPrice !== total) {
