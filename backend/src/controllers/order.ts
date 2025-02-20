@@ -3,24 +3,10 @@ import { faker } from '@faker-js/faker';
 import Product from '../models/products';
 import BadRequestError from '../errors/bad-request-error';
 
-enum Payment {
-    card = 'card',
-    online = 'online'
-}
-
-interface IOrder {
-    'payment': Payment,
-    'email': string,
-    'phone': string,
-    'address': string,
-    'total': number,
-    'items': string[]
-}
-
 const postOrder = async (req: Request, res: Response, next: NextFunction) => {
-  const order: IOrder = req.body;
+  const order = req.body;
 
-  const { total, items } = order;
+  const { total, items, payment } = order;
 
   const productBase = await Product.find({});
   let totalPrice: number = 0;
@@ -36,11 +22,15 @@ const postOrder = async (req: Request, res: Response, next: NextFunction) => {
     return totalPrice;
   });
 
+  if (payment !== 'card' || payment !== 'online') {
+    return next(new BadRequestError('Неправильно выбран тип оплаты'));
+  }
+
   if (totalPrice !== total) {
     return next(new BadRequestError(`Сумма указанная в запросе ${totalPrice} не совпадает с ${total}`));
   }
 
-  return res.status(201).send({
+  return res.status(200).send({
     id: faker.string.uuid(),
     total,
   });
