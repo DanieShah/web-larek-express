@@ -1,3 +1,3 @@
 require('dotenv').config();
 
-export const { PORT, DB_ADDRESS } = process.env;
+export const { PORT = 3000, DB_ADDRESS = 'mongodb://root:example@mongo:27017/' } = process.env;
